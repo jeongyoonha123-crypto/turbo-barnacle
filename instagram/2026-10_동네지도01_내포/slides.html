@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>FYND 동네 지도 01 · 내포</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700&display=swap">
+<style>
+/* 가게 시리즈(매거진형) 규격: 종이 회색 바탕 + 잉크, 제목 명조, 본문 고딕, 레드는 태그·숫자·CTA에만.
+   사진 자리는 점선 박스 + 라벨만 둔다(실제 사진은 Canva에서 채움). 슬라이드 1장 = 1080×1350 */
+:root{
+  --paper:#F0F0F1; --ink:#121214; --body:#2B2B30; --g1:#CFCFD1; --g2:#818185; --red:#DD010F;
+  --serif:'Noto Serif KR',serif; --sans:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;font-family:var(--sans);color:var(--ink)}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--paper);margin:0 auto 40px}
+.ph{position:absolute;left:0;top:0;width:1080px;background:#E3E3E5;display:flex;align-items:center;justify-content:center}
+.ph::after{content:"";position:absolute;inset:28px;border:3px dashed var(--g2)}
+.ph span{position:relative;z-index:1;font-size:28px;font-weight:500;color:var(--g2);text-align:center;line-height:1.5;padding:0 120px}
+.text{position:absolute;left:96px;right:76px}
+.tag{font-size:27px;font-weight:700;color:var(--red);letter-spacing:.02em}
+.title{font-family:var(--serif);font-weight:700;color:var(--ink);letter-spacing:-.02em;word-break:keep-all}
+.bodytext{font-size:33px;line-height:1.62;color:var(--body);word-break:keep-all}
+.info{font-size:27px;line-height:1.55;color:var(--g2);word-break:keep-all}
+.foot{position:absolute;left:96px;bottom:64px;font-size:24px;font-weight:500;color:var(--g2);letter-spacing:.01em}
+.page{position:absolute;right:76px;bottom:64px;font-size:24px;font-weight:700;color:var(--g2);font-variant-numeric:tabular-nums}
+
+/* 1 표지 */
+#s1 .ph{height:760px}
+#s1 .text{top:846px}
+#s1 .title{font-size:80px;line-height:1.28;margin-top:24px}
+#s1 .index{margin-top:36px;font-size:30px;font-weight:500;color:var(--g2)}
+
+/* 2 한눈에 보기 */
+#s2 .text{top:128px}
+#s2 .title{font-size:64px;line-height:1.32;margin-top:22px}
+#s2 .rows{position:absolute;left:96px;right:76px;top:500px}
+#s2 .row{display:grid;grid-template-columns:150px 1fr;padding:44px 0 46px;border-top:2px solid var(--g1)}
+#s2 .row:last-child{border-bottom:2px solid var(--g1)}
+#s2 .num{font-family:var(--serif);font-weight:700;font-size:66px;line-height:1;color:var(--red);margin-left:-6px}
+#s2 .when{font-size:28px;font-weight:700;color:var(--g2)}
+#s2 .name{font-family:var(--serif);font-weight:700;font-size:46px;line-height:1.25;margin-top:8px}
+#s2 .where{font-size:27px;color:var(--g2);margin-top:8px}
+
+/* 3–5 가게 */
+.shop .ph{height:720px}
+.shop .text{top:780px}
+.shop .title{font-size:54px;line-height:1.34;margin-top:18px}
+.shop .bodytext{margin-top:24px}
+.shop .info{margin-top:22px;padding-top:20px;border-top:2px solid var(--g1)}
+
+/* 6 요약 */
+#s6 .text{top:120px}
+#s6 .title{font-size:60px;line-height:1.32;margin-top:22px}
+#s6 .cards{position:absolute;left:96px;right:76px;top:430px}
+#s6 .card{background:#FFFFFF;padding:34px 40px 36px;margin-bottom:24px;border-left:8px solid var(--red)}
+#s6 .card .when{font-size:26px;font-weight:700;color:var(--red)}
+#s6 .card .name{font-family:var(--serif);font-weight:700;font-size:44px;margin-top:6px}
+#s6 .card .meta{font-size:28px;color:var(--body);margin-top:10px;line-height:1.5}
+#s6 .note{position:absolute;left:96px;right:76px;top:1180px;font-size:26px;color:var(--g2)}
+
+/* 7 마지막 장 */
+#s7{background:var(--ink)}
+#s7 .text{top:360px}
+#s7 .title{font-size:76px;line-height:1.3;color:#FFFFFF}
+#s7 .cta{display:inline-block;margin-top:64px;background:var(--red);color:#FFFFFF;font-size:40px;font-weight:700;padding:30px 42px}
+#s7 .sub{margin-top:40px;font-size:31px;line-height:1.6;color:var(--g1)}
+#s7 .closing{position:absolute;left:96px;right:76px;bottom:80px;display:flex;justify-content:space-between;align-items:flex-end}
+#s7 .closing p{font-size:27px;color:var(--g1)}
+#s7 .mark{font-weight:900;font-size:44px;letter-spacing:.08em;color:#FFFFFF}
+</style>
+</head>
+<body>
+
+<section class="slide" id="s1">
+  <div class="ph"><span>사진 자리<br>세 가게 사진을 나란히 (도시락 상자 · 훈련 장면 · 구운계란)</span></div>
+  <div class="text">
+    <p class="tag">FYND 동네 지도 01 — 내포·홍성</p>
+    <h1 class="title">내포에서 아이 키우는 집에 필요한 세 곳을 모았습니다.</h1>
+    <p class="index">행사 도시락 · 아이 축구교실 · 아이 간식</p>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="text">
+    <p class="tag">한눈에 보기</p>
+    <h2 class="title">필요한 순간에 맞춰<br>세 곳을 골랐습니다.</h2>
+  </div>
+  <div class="rows">
+    <div class="row"><div class="num">01</div><div><p class="when">행사 도시락 · 평일 점심</p><p class="name">GREENY BOX</p><p class="where">예산 삽교읍 청사로</p></div></div>
+    <div class="row"><div class="num">02</div><div><p class="when">아이 축구교실</p><p class="name">예산 애플 유나이티드</p><p class="where">예산 삽교읍 예목로</p></div></div>
+    <div class="row"><div class="num">03</div><div><p class="when">아이 간식 · 장보기</p><p class="name">크로바양계</p><p class="where">홍성읍 · e홍성장터 주문</p></div></div>
+  </div>
+  <p class="foot">FYND가 소개한 내포·홍성 가게</p><p class="page">2 / 7</p>
+</section>
+
+<section class="slide shop" id="s3">
+  <div class="ph"><span>사진 자리<br>단체 도시락 상자 또는 샐러드·포케</span></div>
+  <div class="text">
+    <p class="tag">01 행사 도시락 · 평일 점심</p>
+    <h2 class="title">어린이집 행사 도시락,<br>20개부터 맞춰 줍니다.</h2>
+    <p class="bodytext">샐러드·포케·샌드위치를 한 상자에 담은 단체 세트가 있어요. 3일 전에 예약하고, 메뉴와 예산에 맞춰 구성할 수 있어요.</p>
+    <p class="info">GREENY BOX · 예산군 삽교읍 청사로 225 엔젤스타워2 108~109호<br>평일 10~19시 · 토 10~14시 · 041-404-7017</p>
+  </div>
+  <p class="page">3 / 7</p>
+</section>
+
+<section class="slide shop" id="s4">
+  <div class="ph"><span>사진 자리<br>훈련 사진 — 보호자 동의가 확인된 사진만<br>(없으면 코치·실내 구장 사진)</span></div>
+  <div class="text">
+    <p class="tag">02 아이 축구교실</p>
+    <h2 class="title">내포신도시 전 지역에 차량이<br>다니는 실내 축구교실입니다.</h2>
+    <p class="bodytext">유치부와 초등부 수업이 있고, 학부모 앱으로 공지와 등·하원 알림을 받아요. 초등부는 2026 노바컵에서 준우승했어요.</p>
+    <p class="info">예산 애플 유나이티드 · 예산군 삽교읍 예목로 154 6층<br>010-7688-5546 (강진모 감독)</p>
+  </div>
+  <p class="page">4 / 7</p>
+</section>
+
+<section class="slide shop" id="s5">
+  <div class="ph"><span>사진 자리<br>구운계란 또는 황토숙성실</span></div>
+  <div class="text">
+    <p class="tag">03 아이 간식 · 장보기</p>
+    <h2 class="title">짜지 않은 구운계란이라<br>아이 간식으로 좋습니다.</h2>
+    <p class="bodytext">1973년 병아리 50마리로 시작한 홍성의 3대 가족 농장이에요. 구운계란 30구 14,900원 (2026년 9월 e홍성장터 기준).</p>
+    <p class="info">크로바양계 · e홍성장터에서 ‘크로바양계’ 검색<br>041-632-5295 · 홍성읍 월산로43번길 48-23</p>
+  </div>
+  <p class="page">5 / 7</p>
+</section>
+
+<section class="slide" id="s6">
+  <div class="text">
+    <p class="tag">캡처해 두세요</p>
+    <h2 class="title">한 장으로 모아 두었습니다.</h2>
+  </div>
+  <div class="cards">
+    <div class="card"><p class="when">행사 도시락 · 평일 점심</p><p class="name">GREENY BOX</p><p class="meta">삽교읍 청사로 225 · 041-404-7017</p></div>
+    <div class="card"><p class="when">아이 축구교실</p><p class="name">예산 애플 유나이티드</p><p class="meta">삽교읍 예목로 154 6층 · 010-7688-5546</p></div>
+    <div class="card"><p class="when">아이 간식 · 장보기</p><p class="name">크로바양계</p><p class="meta">e홍성장터 주문 · 041-632-5295</p></div>
+  </div>
+  <p class="note">방문 전 운영 시간과 예약 여부를 확인해 주세요.</p>
+  <p class="page">6 / 7</p>
+</section>
+
+<section class="slide" id="s7">
+  <div class="text">
+    <h2 class="title">내포에 사는 친구에게<br>보내 주세요.</h2>
+    <p class="cta">보내기 ↗</p>
+    <p class="sub">다음 동네 지도는 어디로 갈까요?<br>댓글에 동네 이름을 남겨 주세요.</p>
+  </div>
+  <div class="closing"><p>충남의 좋은 가게를 찾아 소개합니다</p><span class="mark">FYND</span></div>
+</section>
+
+</body>
+</html>
