@@ -3,213 +3,192 @@
 <head>
 <meta charset="utf-8">
 <title>FYND 사장님 알림판 01</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="../tools/fynd-cards.css">
 <style>
-/* 사장님 알림판: 표지·점검표·마지막 장은 블랙 캔버스(사장님 노트와 같은 계열),
-   소식 장은 흰 바탕 공지문 형식(상단 잉크 띠 + 항목표 + 할 일 + 출처). 레드는 태그·숫자·CTA에만. 1장 = 1080×1350 */
-:root{
-  --dark:#0A0A0B; --white:#FFFFFF; --ink:#121214; --body:#2B2B30; --line:#E3E3E5; --soft:#F4F4F5;
-  --g1:#CFCFD1; --g2:#818185; --red:#DD010F; --sans:'Noto Sans KR',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#888;font-family:var(--sans)}
-.slide{width:1080px;height:1350px;position:relative;overflow:hidden;margin:0 auto 40px;word-break:keep-all}
-.grid{background-color:var(--dark);color:var(--white);background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:90px 90px;background-position:-1px -1px}
-.badge{display:inline-block;background:var(--red);color:var(--white);font-size:28px;font-weight:700;padding:12px 20px;letter-spacing:.02em}
-.foot{position:absolute;left:96px;bottom:68px;font-size:24px;font-weight:500;color:var(--g2)}
-.page{position:absolute;right:76px;bottom:64px;font-size:23px;font-weight:700;color:var(--g2);font-variant-numeric:tabular-nums}
+/* 공통 장치는 fynd-cards.css. 소식 장은 가게 소개 '한눈에 보기'와 같은 정보표에 할 일·출처를 붙인다.
+   배경 리듬: 표지(기본) → 목차(격자) → 흰 → 기본 → 흰(가격 카드형) → 버건디 → 흰 → 격자 → 기본 → 고정 클로징 */
+.mid.left .headline.s{margin-bottom:44px;}
+.mid.left .todo{margin-top:40px;}
+.mid.left .src{margin-top:26px;}
+.info .day{width:150px;}
+.info .day b{display:block;font-family:var(--mono);font-size:34px;font-weight:700;letter-spacing:-.02em;color:inherit;}
+.info .day i{font-style:normal;font-size:20px;color:var(--muted-light);}
+.info .red b{color:var(--red);}
 
-/* 1 표지 */
-#s1 .badge{position:absolute;left:96px;top:110px}
-#s1 .date{position:absolute;left:96px;top:186px;font-size:27px;font-weight:500;color:var(--g1)}
-#s1 h1{position:absolute;left:96px;right:76px;top:262px;font-size:84px;font-weight:900;line-height:1.24;letter-spacing:-.03em}
-#s1 ol{position:absolute;left:96px;right:76px;top:654px;list-style:none}
-#s1 li{display:grid;grid-template-columns:44px 150px 1fr;align-items:baseline;padding:19px 0;border-top:2px solid rgba(255,255,255,.13)}
-#s1 li:last-child{border-bottom:2px solid rgba(255,255,255,.13)}
-#s1 li b{font-size:30px;font-weight:900;color:var(--red);font-variant-numeric:tabular-nums}
-#s1 li span{font-size:25px;font-weight:700;color:var(--g1)}
-#s1 li em{font-style:normal;font-size:31px;font-weight:700;color:var(--white)}
+/* 어두운 카드 위 정보표 */
+.card:not(.light) .info{border-top-color:#5A5A5D;}
+.card:not(.light) .info > div{border-bottom-color:var(--line-dark);}
+.card:not(.light) .info small,.card:not(.light) .info .day i{color:var(--muted);}
+.card:not(.light) .info span em{color:var(--soft);}
+.card:not(.light) .info .red b{color:#FF4D57;}
 
-/* 소식 장 (흰 바탕 공지문) */
-.notice{background:var(--white);color:var(--ink)}
-.strip{position:absolute;left:0;right:0;top:0;height:84px;background:var(--ink);color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:0 76px 0 96px;font-size:23px;font-weight:700;letter-spacing:.02em}
-.strip span{color:var(--g1);font-weight:500}
-.tag{position:absolute;left:96px;top:142px;font-size:27px;font-weight:700;color:var(--red)}
-.notice h2{position:absolute;left:96px;right:76px;top:192px;font-size:58px;font-weight:900;line-height:1.3;letter-spacing:-.03em}
-.facts{position:absolute;left:96px;right:76px;top:440px}
-.row{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:24px 0;border-top:2px solid var(--line)}
-.row:last-child{border-bottom:2px solid var(--line)}
-.row dt{font-size:25px;font-weight:700;color:var(--g2);padding-top:3px}
-.row dd{font-size:31px;font-weight:700;line-height:1.45;color:var(--ink)}
-.row dd small{display:block;font-size:25px;font-weight:500;color:var(--body);margin-top:4px;line-height:1.5}
-.todo{position:absolute;left:96px;right:76px;background:var(--soft);border-left:8px solid var(--red);padding:24px 30px 26px}
-.todo b{display:block;font-size:24px;font-weight:700;color:var(--red);margin-bottom:6px}
-.todo p{font-size:29px;font-weight:700;line-height:1.5;color:var(--ink)}
-.src{position:absolute;left:96px;right:200px;bottom:62px;font-size:21px;line-height:1.5;color:var(--g2)}
+#c1 .badge{margin-bottom:48px;}
+#c1 .sub{margin-top:44px;}
+#c2 .steps,#c9 .steps{gap:28px;}
+#c2 .step h3,#c9 .step h3{font-size:36px;}
+#c2 .step p,#c9 .step p{font-size:24px;margin-top:6px;}
+#c2 .step .n,#c9 .step .n{font-size:38px;}
+#c9 .badge{margin-bottom:48px;}
 
-/* 날짜표 (세금 일정·장사 달력) */
-.dates{position:absolute;left:96px;right:76px;top:430px}
-.d{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:22px 0;border-top:2px solid var(--line)}
-.d:last-child{border-bottom:2px solid var(--line)}
-.d .day{font-size:40px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15}
-.d .day i{font-style:normal;font-size:24px;font-weight:700;color:var(--g2);margin-left:6px}
-.d .what{font-size:31px;font-weight:700;line-height:1.35}
-.d .what small{display:block;font-size:24px;font-weight:500;color:var(--body);margin-top:4px;line-height:1.45}
-.d.hot .day{color:var(--red)}
-
-/* 최저임금 큰 숫자 */
-.big{position:absolute;left:96px;right:76px;top:420px;display:flex;align-items:baseline;gap:26px;flex-wrap:wrap}
-.big .old{font-size:44px;font-weight:700;color:var(--g2);text-decoration:line-through;text-decoration-thickness:3px}
-.big .arrow{font-size:40px;font-weight:700;color:var(--g2)}
-.big .new{font-size:112px;font-weight:900;letter-spacing:-.04em;line-height:1}
-.big .new small{font-size:44px;font-weight:900;margin-left:4px}
-.big .up{width:100%;font-size:30px;font-weight:700;color:var(--red);margin-top:6px}
-
-/* 8 점검표 */
-#s8 .badge{position:absolute;left:96px;top:116px}
-#s8 h2{position:absolute;left:96px;right:76px;top:204px;font-size:64px;font-weight:900;line-height:1.3;letter-spacing:-.03em}
-#s8 ul{position:absolute;left:96px;right:76px;top:440px;list-style:none}
-#s8 li{display:flex;gap:28px;align-items:flex-start;padding:28px 0;border-top:2px solid rgba(255,255,255,.14);font-size:35px;font-weight:700;line-height:1.4}
-#s8 li:last-child{border-bottom:2px solid rgba(255,255,255,.14)}
-#s8 li::before{content:"";flex:none;width:44px;height:44px;border:3px solid var(--white);margin-top:3px}
-#s8 li small{display:block;font-size:24px;font-weight:500;color:var(--g1);margin-top:2px}
-
-/* 9 마지막 장 */
-#s9 h2{position:absolute;left:96px;right:76px;top:230px;font-size:88px;font-weight:900;line-height:1.22;letter-spacing:-.035em}
-#s9 .cta{position:absolute;left:96px;top:600px;background:var(--red);padding:32px 44px;font-size:46px;font-weight:900;letter-spacing:-.02em}
-#s9 .desc{position:absolute;left:96px;right:120px;top:770px;font-size:33px;line-height:1.6;color:var(--g1)}
-#s9 .note{position:absolute;left:96px;right:120px;top:960px;font-size:25px;line-height:1.6;color:var(--g2)}
-#s9 .closing{position:absolute;left:96px;right:76px;bottom:80px;display:flex;justify-content:space-between;align-items:flex-end}
-#s9 .closing p{font-size:27px;line-height:1.5;color:var(--g1)}
-#s9 .mark{font-weight:900;font-size:44px;letter-spacing:.08em}
+/* 최저임금: 4부 회비 카드와 같은 가격 카드 */
+#c5 .before{font-size:34px;font-weight:500;color:var(--body-light);line-height:1.5;}
+#c5 .price{margin-top:30px;font-size:112px;font-weight:900;letter-spacing:-.04em;line-height:1.1;}
+#c5 .price .hl{padding:0 18px;border-radius:10px;font-weight:900;}
+#c5 .after{margin-top:28px;font-size:34px;font-weight:700;line-height:1.5;}
+#c5 .dots{margin-top:60px;}
+#c5 .dots span{font-size:27px;color:#2A2A2D;}
+#c5 .todo{margin-top:52px;max-width:860px;}
+#c5 .src{margin-top:24px;text-align:center;}
 </style>
 </head>
 <body>
 
-<section class="slide grid" id="s1">
-  <span class="badge">사장님 알림판 01</span>
-  <p class="date">2026년 10월 둘째 주 · 10월 7일 기준</p>
-  <h1>10월에 사장님이<br>챙길 소식 여섯 가지를<br>모았습니다.</h1>
-  <ol>
-    <li><b>1</b><span>세금</span><em>10/12 원천세 · 10/26 부가세</em></li>
-    <li><b>2</b><span>지원금</span><em>경영안정 바우처 25만 원</em></li>
-    <li><b>3</b><span>인건비</span><em>2027년 최저임금 10,700원</em></li>
-    <li><b>4</b><span>절세</span><em>노란우산공제 바뀐 점</em></li>
-    <li><b>5</b><span>자금</span><em>천안·아산 특례보증</em></li>
-    <li><b>6</b><span>장사 달력</span><em>11월 빼빼로데이·수능</em></li>
-  </ol>
-  <p class="foot">FYND · 충남 사장님 네트워크</p>
-</section>
-
-<section class="slide notice" id="s2">
-  <div class="strip">사장님 알림판 01<span>10월 둘째 주</span></div>
-  <p class="tag">1 세금 · 신고 일정</p>
-  <h2>10월에는 원천세와 부가세<br>예정 납부가 있습니다.</h2>
-  <div class="dates">
-    <div class="d hot"><p class="day">10/12<i>월</i></p><p class="what">원천세·4대보험료 납부<small>9월분. 직원이 있다면</small></p></div>
-    <div class="d"><p class="day">10/15<i>목</i></p><p class="what">고용보험 근로내용확인신고<small>9월에 일용직을 썼다면</small></p></div>
-    <div class="d hot"><p class="day">10/26<i>월</i></p><p class="what">부가세 2기 예정 납부<small>개인사업자는 세무서 고지서 금액(상반기 세액의 50%)을 내요. 50만&nbsp;원 미만이면 고지가 없어요</small></p></div>
-    <div class="d"><p class="day">11/2<i>월</i></p><p class="what">지급명세서 제출<small>9월분 일용근로·사업·기타소득</small></p></div>
+<section class="card" id="c1">
+  <div class="eyebrow"><span class="dot"></span>FYND · 사장님 알림판 01</div>
+  <div class="mid">
+    <div class="badge">10월 둘째 주</div>
+    <div class="headline">10월에 사장님이<br>챙길 소식 <span class="hl">여섯 가지</span>를<br>모았습니다</div>
+    <p class="sub">10월 7일 기준으로 정리했어요</p>
   </div>
-  <div class="todo" style="top:1046px"><b>할 일</b><p>고지서가 왔는지 홈택스에서 확인하세요. 기한이 토·일이면 다음 평일로 미뤄져요.</p></div>
-  <p class="src">출처: 국세기본법 제5조(기한 특례), 공부하는 세무사 「월별 세무일정 2026년 10월」</p>
-  <p class="page">2 / 9</p>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">01 / 10</span></div>
 </section>
 
-<section class="slide notice" id="s3">
-  <div class="strip">사장님 알림판 01<span>10월 둘째 주</span></div>
-  <p class="tag">2 지원금</p>
-  <h2>작년 매출이 1억 400만 원<br>미만이면 25만 원을 받습니다.</h2>
-  <dl class="facts">
-    <div class="row"><dt>대상</dt><dd>2025년 연매출 0원 초과 1억 400만&nbsp;원 미만<small>2025년 12월 31일 이전 개업, 지금 영업 중</small></dd></div>
-    <div class="row"><dt>쓰는 곳</dt><dd>공과금, 4대보험료, 차량 연료비 같은 고정비<small>내 카드에 바우처로 들어와요</small></dd></div>
-    <div class="row"><dt>기한</dt><dd>신청 12월 18일까지, 사용 12월 31일까지<small>예산이 떨어지면 일찍 마감돼요</small></dd></div>
-    <div class="row"><dt>신청</dt><dd>소상공인경영안정바우처.kr · 소상공인24</dd></div>
-  </dl>
-  <div class="todo" style="top:1046px"><b>할 일</b><p>아직 안 했다면 이번 주에 신청하세요. 서류 없이 사업자 정보와 카드만 있으면 돼요.</p></div>
-  <p class="src">출처: 소상공인 경영안정 바우처 공식 누리집 (10월 7일 '현재 신청 가능' 확인)</p>
-  <p class="page">3 / 9</p>
-</section>
-
-<section class="slide notice" id="s4">
-  <div class="strip">사장님 알림판 01<span>10월 둘째 주</span></div>
-  <p class="tag">3 인건비</p>
-  <h2>내년 최저임금은<br>시간당 10,700원입니다.</h2>
-  <div class="big"><span class="old">10,320원</span><span class="arrow">→</span><span class="new">10,700<small>원</small></span><p class="up">380원 오름 (3.7%)</p></div>
-  <dl class="facts" style="top:690px">
-    <div class="row"><dt>언제부터</dt><dd>2027년 1월 1일<small>업종 상관없이 모든 사업장 같은 금액</small></dd></div>
-    <div class="row"><dt>월 환산</dt><dd>2,236,300원<small>주 40시간, 월 209시간 기준</small></dd></div>
-  </dl>
-  <div class="todo" style="top:1012px"><b>할 일</b><p>12월에 내년 인건비와 가격을 미리 계산해 두세요. 1월 1일부터 근로계약서 시급도 10,700원 이상이어야 해요.</p></div>
-  <p class="src">출처: 고용노동부 2027년 적용 최저임금 고시 (2026년 8월 5일)</p>
-  <p class="page">4 / 9</p>
-</section>
-
-<section class="slide notice" id="s5">
-  <div class="strip">사장님 알림판 01<span>10월 둘째 주</span></div>
-  <p class="tag">4 절세</p>
-  <h2>노란우산공제는 올해부터<br>공제 기간 제한이 없어졌습니다.</h2>
-  <dl class="facts">
-    <div class="row"><dt>바뀐 점</dt><dd>소득공제 '50개월 한도'가 없어졌어요<small>사업을 하는 동안 계속 공제받아요</small></dd></div>
-    <div class="row"><dt>납입</dt><dd>7월부터 한 달 최대 150만&nbsp;원<small>1년에 1,800만&nbsp;원까지</small></dd></div>
-    <div class="row"><dt>공제 한도</dt><dd>사업소득 4천만&nbsp;원 이하면 연 최대 600만&nbsp;원<small>소득이 많을수록 한도가 줄어요</small></dd></div>
-    <div class="row"><dt>언제까지</dt><dd>올해 낸 금액이 올해 소득공제에 들어가요<small>12월 31일까지 낸 금액</small></dd></div>
-  </dl>
-  <div class="todo" style="top:1066px"><b>할 일</b><p>가입 전이라면 연말 전에 알아보세요. 폐업할 때 목돈으로 돌려받는 사장님 퇴직금 같은 제도예요.</p></div>
-  <p class="src">출처: 중소기업중앙회 발표 (SBS Biz 「노란우산 납입 월 150만원으로 확대」)</p>
-  <p class="page">5 / 9</p>
-</section>
-
-<section class="slide notice" id="s6">
-  <div class="strip">사장님 알림판 01<span>10월 둘째 주</span></div>
-  <p class="tag">5 자금 · 천안·아산</p>
-  <h2>천안·아산 사장님은 연말까지<br>특례보증을 신청할 수 있습니다.</h2>
-  <dl class="facts">
-    <div class="row"><dt>대상</dt><dd>천안시 또는 아산시에 사업장이 있는 소상공인</dd></div>
-    <div class="row"><dt>한도</dt><dd>업체당 최대 5천만&nbsp;원 이내</dd></div>
-    <div class="row"><dt>기간</dt><dd>2026년 9월 11일 ~ 12월 31일</dd></div>
-    <div class="row"><dt>방식</dt><dd>충남신용보증재단이 보증서를 내주고 협약 은행이 대출해요<small>천안 협약 은행: 농협·하나·국민은행</small></dd></div>
-  </dl>
-  <div class="todo" style="top:1046px"><b>할 일</b><p>충남신용보증재단 천안·아산지점에 먼저 상담하세요. 다른 시군도 시군청 공고를 확인해 보세요.</p></div>
-  <p class="src">출처: 천안시 소상공인 특례보증 업무협약 보도(2026.9.11), 기업마당 공고</p>
-  <p class="page">6 / 9</p>
-</section>
-
-<section class="slide notice" id="s7">
-  <div class="strip">사장님 알림판 01<span>10월 둘째 주</span></div>
-  <p class="tag">6 장사 달력</p>
-  <h2>11월 장사 달력을<br>미리 표시해 두세요.</h2>
-  <div class="dates">
-    <div class="d hot"><p class="day">11/11<i>수</i></p><p class="what">빼빼로데이<small>간식·선물 수요</small></p></div>
-    <div class="d hot"><p class="day">11/19<i>목</i></p><p class="what">2027학년도 수능<small>수험생 응원 선물, 시험 끝난 저녁 외식</small></p></div>
-    <div class="d"><p class="day">11/27<i>금</i></p><p class="what">블랙프라이데이<small>온라인 할인 행사가 몰리는 주</small></p></div>
-    <div class="d"><p class="day">11/30<i>월</i></p><p class="what">종합소득세 중간예납<small>고지서를 받은 개인사업자</small></p></div>
+<section class="card grid-bg" id="c2">
+  <div class="eyebrow"><span class="dot"></span>이번 호에 담은 것</div>
+  <div class="mid">
+    <div class="steps">
+      <div class="step"><div class="n">01</div><div><h3>세금 일정</h3><p>10/12 원천세, 10/26 부가세 예정 납부</p></div></div>
+      <div class="step"><div class="n">02</div><div><h3>경영안정 바우처</h3><p>작년 매출 1억 400만&nbsp;원 미만이면 25만&nbsp;원</p></div></div>
+      <div class="step"><div class="n">03</div><div><h3>2027년 최저임금</h3><p>시간당 10,700원</p></div></div>
+      <div class="step"><div class="n">04</div><div><h3>노란우산공제</h3><p>올해 바뀐 점 두 가지</p></div></div>
+      <div class="step"><div class="n">05</div><div><h3>천안·아산 특례보증</h3><p>연말까지, 업체당 최대 5천만&nbsp;원 이내</p></div></div>
+      <div class="step"><div class="n">06</div><div><h3>11월 장사 달력</h3><p>빼빼로데이 · 수능 · 블랙프라이데이</p></div></div>
+    </div>
   </div>
-  <div class="todo" style="top:1046px"><b>할 일</b><p>행사 2주 전에 메뉴와 이벤트를 정하고, 인스타에 먼저 알리세요.</p></div>
-  <p class="src">출처: 교육부 2027학년도 수능 시행 계획, 소득세법 제65조(중간예납)</p>
-  <p class="page">7 / 9</p>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">02 / 10</span></div>
 </section>
 
-<section class="slide grid" id="s8">
-  <span class="badge">이번 달 할 일</span>
-  <h2>저장해 두고<br>하나씩 체크해 보세요.</h2>
-  <ul>
-    <li><span>10/12 원천세·4대보험료<small>직원이 있다면</small></span></li>
-    <li><span>10/26 부가세 고지서 납부</span></li>
-    <li><span>경영안정 바우처 신청<small>12/18까지, 예산 소진 시 조기 마감</small></span></li>
-    <li><span>내년 인건비 다시 계산<small>시급 10,700원 기준</small></span></li>
-    <li><span>노란우산공제 올해 납입 확인</span></li>
-    <li><span>11월 행사 메뉴·이벤트 정하기</span></li>
-  </ul>
-  <p class="page">8 / 9</p>
+<section class="card light" id="c3">
+  <div class="eyebrow"><span class="dot"></span>01 · 세금 일정</div>
+  <div class="mid left">
+    <div class="headline s">10월에는 원천세와<br>부가세 예정 납부가 있습니다</div>
+    <div class="info">
+      <div><small class="day red"><b>10/12</b><i>월</i></small><span>원천세·4대보험료 납부<em>9월분. 직원이 있다면</em></span></div>
+      <div><small class="day"><b>10/15</b><i>목</i></small><span>고용보험 근로내용확인신고<em>9월에 일용직을 썼다면</em></span></div>
+      <div><small class="day red"><b>10/26</b><i>월</i></small><span>부가세 2기 예정 납부<em>개인사업자는 세무서 고지서 금액(상반기 세액의 50%)을 내요. 50만&nbsp;원 미만이면 고지가 없어요</em></span></div>
+      <div><small class="day"><b>11/2</b><i>월</i></small><span>지급명세서 제출<em>9월분 일용근로·사업·기타소득</em></span></div>
+    </div>
+    <div class="todo"><span class="badge">할 일</span><p>고지서가 왔는지 홈택스에서 확인하세요. 기한이 토·일이면 다음 평일로 미뤄져요.</p></div>
+    <p class="src">출처 · 국세기본법 제5조(기한 특례), 공부하는 세무사 「월별 세무일정 2026년 10월」</p>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">03 / 10</span></div>
 </section>
 
-<section class="slide grid" id="s9">
-  <h2>알림판에 올렸으면<br>하는 소식이 있나요?</h2>
-  <p class="cta">DM으로 알려 주세요</p>
-  <p class="desc">지원사업 공고, 바뀌는 제도, 동네 행사까지. 충남 사장님이 함께 알면 좋은 소식이면 뭐든 좋아요.</p>
-  <p class="note">이 알림판은 10월 7일 기준으로 정리했어요.<br>신청하기 전에 공고 원문을 꼭 확인해 주세요.</p>
-  <div class="closing"><p>FYND는 충남 사장님들이<br>서로 돕는 네트워크를 만듭니다.</p><span class="mark">FYND</span></div>
+<section class="card" id="c4">
+  <div class="eyebrow"><span class="dot"></span>02 · 지원금</div>
+  <div class="mid left">
+    <div class="headline s">작년 매출이 1억 400만&nbsp;원<br>미만이면 <span class="hl">25만&nbsp;원</span>을 받습니다</div>
+    <div class="info">
+      <div><small>대상</small><span>2025년 연매출 0원 초과 1억 400만&nbsp;원 미만<em>2025년 12월 31일 이전 개업, 지금 영업 중</em></span></div>
+      <div><small>쓰는 곳</small><span>공과금, 4대보험료, 차량 연료비 같은 고정비<em>내 카드에 바우처로 들어와요</em></span></div>
+      <div><small>기한</small><span>신청 12월 18일까지, 사용 12월 31일까지<em>예산이 떨어지면 일찍 마감돼요</em></span></div>
+      <div><small>신청</small><span>소상공인경영안정바우처.kr · 소상공인24</span></div>
+    </div>
+    <div class="todo"><span class="badge">할 일</span><p>아직 안 했다면 이번 주에 신청하세요. 서류 없이 사업자 정보와 카드만 있으면 돼요.</p></div>
+    <p class="src">출처 · 소상공인 경영안정 바우처 공식 누리집 (10월 7일 '현재 신청 가능' 확인)</p>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">04 / 10</span></div>
+</section>
+
+<section class="card light" id="c5">
+  <div class="eyebrow"><span class="dot"></span>03 · 인건비</div>
+  <div class="mid">
+    <div class="before">내년 최저임금은</div>
+    <div class="price">시간당 <span class="hl">10,700원</span></div>
+    <div class="after">2027년 1월 1일부터 모든 사업장에 적용돼요</div>
+    <div class="dots">
+      <span>올해 10,320원에서 380원(3.7%) 올라요</span>
+      <span>월 환산 2,236,300원 (주 40시간, 월 209시간 기준)</span>
+      <span>1월 1일부터 근로계약서 시급도 10,700원 이상</span>
+    </div>
+    <div class="todo"><span class="badge">할 일</span><p>12월에 내년 인건비와 가격을 미리 계산해 두세요.</p></div>
+    <p class="src">출처 · 고용노동부 2027년 적용 최저임금 고시 (2026년 8월 5일)</p>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">05 / 10</span></div>
+</section>
+
+<section class="card burgundy" id="c6">
+  <div class="eyebrow"><span class="dot"></span>04 · 절세</div>
+  <div class="mid left">
+    <div class="headline s">노란우산공제는 올해부터<br>공제 기간 제한이 없어졌습니다</div>
+    <div class="info">
+      <div><small>바뀐 점</small><span>소득공제 '50개월 한도'가 없어졌어요<em>사업을 하는 동안 계속 공제받아요</em></span></div>
+      <div><small>납입</small><span>7월부터 한 달 최대 150만&nbsp;원<em>1년에 1,800만&nbsp;원까지</em></span></div>
+      <div><small>공제 한도</small><span>사업소득 4천만&nbsp;원 이하면 연 최대 600만&nbsp;원<em>소득이 많을수록 한도가 줄어요</em></span></div>
+      <div><small>언제까지</small><span>올해 낸 금액이 올해 소득공제에 들어가요<em>12월 31일까지 낸 금액</em></span></div>
+    </div>
+    <div class="todo"><span class="badge">할 일</span><p>가입 전이라면 연말 전에 알아보세요. 폐업할 때 목돈으로 돌려받는 사장님 퇴직금 같은 제도예요.</p></div>
+    <p class="src">출처 · 중소기업중앙회 발표 (SBS Biz 「노란우산 납입 월 150만원으로 확대」)</p>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">06 / 10</span></div>
+</section>
+
+<section class="card light" id="c7">
+  <div class="eyebrow"><span class="dot"></span>05 · 자금 · 천안·아산</div>
+  <div class="mid left">
+    <div class="headline s">천안·아산 사장님은 연말까지<br>특례보증을 신청할 수 있습니다</div>
+    <div class="info">
+      <div><small>대상</small><span>천안시 또는 아산시에 사업장이 있는 소상공인</span></div>
+      <div><small>한도</small><span>업체당 최대 5천만&nbsp;원 이내</span></div>
+      <div><small>기간</small><span>2026년 9월 11일 ~ 12월 31일</span></div>
+      <div><small>방식</small><span>충남신용보증재단이 보증서를 내주고 협약 은행이 대출해요<em>천안 협약 은행: 농협·하나·국민은행</em></span></div>
+    </div>
+    <div class="todo"><span class="badge">할 일</span><p>충남신용보증재단 천안·아산지점에 먼저 상담하세요. 다른 시군도 시군청 공고를 확인해 보세요.</p></div>
+    <p class="src">출처 · 천안시 소상공인 특례보증 업무협약 보도(2026.9.11), 기업마당 공고</p>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">07 / 10</span></div>
+</section>
+
+<section class="card grid-bg" id="c8">
+  <div class="eyebrow"><span class="dot"></span>06 · 장사 달력</div>
+  <div class="mid left">
+    <div class="headline s">11월 장사 달력을<br>미리 표시해 두세요</div>
+    <div class="info">
+      <div><small class="day red"><b>11/11</b><i>수</i></small><span>빼빼로데이<em>간식·선물 수요</em></span></div>
+      <div><small class="day red"><b>11/19</b><i>목</i></small><span>2027학년도 수능<em>수험생 응원 선물, 시험 끝난 저녁 외식</em></span></div>
+      <div><small class="day"><b>11/27</b><i>금</i></small><span>블랙프라이데이<em>온라인 할인 행사가 몰리는 주</em></span></div>
+      <div><small class="day"><b>11/30</b><i>월</i></small><span>종합소득세 중간예납<em>고지서를 받은 개인사업자</em></span></div>
+    </div>
+    <div class="todo"><span class="badge">할 일</span><p>행사 2주 전에 메뉴와 이벤트를 정하고, 인스타에 먼저 알리세요.</p></div>
+    <p class="src">출처 · 교육부 2027학년도 수능 시행 계획, 소득세법 제65조(중간예납)</p>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">08 / 10</span></div>
+</section>
+
+<section class="card" id="c9">
+  <div class="eyebrow"><span class="dot"></span>이번 달 할 일</div>
+  <div class="mid">
+    <div class="badge">저장해 두고 하나씩 체크</div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><div><h3>10/12 원천세·4대보험료</h3><p>직원이 있다면</p></div></div>
+      <div class="step"><div class="n">02</div><div><h3>10/26 부가세 고지서 납부</h3><p>고지서 금액 그대로</p></div></div>
+      <div class="step"><div class="n">03</div><div><h3>경영안정 바우처 신청</h3><p>12/18까지, 예산이 떨어지면 일찍 마감</p></div></div>
+      <div class="step"><div class="n">04</div><div><h3>내년 인건비 다시 계산</h3><p>시급 10,700원 기준</p></div></div>
+      <div class="step"><div class="n">05</div><div><h3>노란우산공제 올해 납입 확인</h3><p>12/31까지 낸 금액이 올해 공제</p></div></div>
+      <div class="step"><div class="n">06</div><div><h3>11월 행사 메뉴·이벤트 정하기</h3><p>행사 2주 전까지</p></div></div>
+    </div>
+  </div>
+  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">09 / 10</span></div>
+</section>
+
+<section class="card closing" id="c10">
+  <div>
+    <div class="close-head">알림판에 올렸으면<br>하는 소식이 있나요?</div>
+    <div class="close-sub">지원사업 공고, 바뀌는 제도, 동네 행사까지.<br>10월 7일 기준으로 정리했어요.<br>신청 전에는 공고 원문을 꼭 확인해 주세요.<br><br>FYND는 충남 사장님들이 서로 돕는<br>네트워크를 만듭니다</div>
+  </div>
+  <div class="cta-box">DM으로 알려 주세요<br>다음 알림판에 담을게요</div>
+  <div class="mark">FYND</div>
 </section>
 
 </body>

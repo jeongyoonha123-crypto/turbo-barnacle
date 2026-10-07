@@ -1,4 +1,4 @@
-// 카드뉴스 HTML의 .slide 요소를 1080×1350 PNG로 저장한다.
+// 카드뉴스 HTML에서 body 바로 아래의 .card(또는 예전 형식의 .slide)를 한 장씩 1080×1350 PNG로 저장한다.
 // 사용법: FONT_CSS=/경로/fonts.css node instagram/tools/render.cjs <slides.html> [출력 폴더]
 // FONT_CSS는 Noto Sans KR / Noto Serif KR을 로컬 파일로 선언한 CSS (fetch-fonts.sh로 만든다).
 const path = require('path');
@@ -18,7 +18,8 @@ const { chromium } = require('playwright');
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(300);
 
-  const slides = await page.$$('.slide');
+  // 장은 body 바로 아래 요소만 센다 (장 안에 .card 상자를 쓴 게시물이 있다).
+  const slides = await page.$$('body > .card, body > .slide');
   for (let i = 0; i < slides.length; i++) {
     const file = path.join(outDir, `slide-${String(i + 1).padStart(2, '0')}.png`);
     await slides[i].screenshot({ path: file });
