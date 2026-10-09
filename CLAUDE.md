@@ -13,7 +13,7 @@
 - `docs/03_작업기록.md` — 지금까지의 결정 과정과 피드백 이력(배경 참고용, 일부는 이후 바뀜)
 - `docs/04_인스타_성장_로드맵.md` — 벤치마크 결론, 단계별 목표, 콘텐츠 시스템, 10월 캘린더
 - `docs/05_인스타_주간기록.md` — 매주 월요일 Apify로 기록하는 팔로워·게시물 반응
-- `instagram/` — 게시물별 폴더(슬라이드 HTML·PNG·캡션). 렌더링 방법은 `instagram/README.md`, 계정 공통 디자인 규칙은 `instagram/DESIGN.md`(새 게시물은 `instagram/tools/fynd-cards.css`를 불러 씀)
+- `instagram/` — 게시물별 폴더(슬라이드 HTML·PNG·캡션). 렌더링 방법은 `instagram/README.md`
 
 인스타 데이터는 Apify(`apify/instagram-scraper`)로 직접 조회할 수 있습니다. 저장·공유·도달 수는 공개되지 않으므로 사용자에게 인사이트 캡처를 받습니다.
 

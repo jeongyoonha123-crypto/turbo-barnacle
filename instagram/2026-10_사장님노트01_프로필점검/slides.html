@@ -3,146 +3,199 @@
 <head>
 <meta charset="utf-8">
 <title>FYND 사장님 노트 01 · 프로필 점검</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
-<link rel="stylesheet" href="../tools/fynd-cards.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700&display=swap">
 <style>
-/* 공통 장치는 fynd-cards.css. 여기에는 이 게시물에만 있는 배치만 둔다.
-   배경 리듬: 기본 다크 → 흰 카드 → 격자 → 기본 → 버건디 → 격자 → 기본 → 고정 클로징 */
-#c2 .headline{margin-bottom:56px;}
-.phone{width:100%;max-width:820px;background:#fff;border:1px solid var(--line-light);border-radius:28px;padding:40px 40px 36px;text-align:left;color:var(--on-light);}
-.phone .top{display:flex;align-items:center;gap:36px;}
-.avatar{width:132px;height:132px;border-radius:50%;border:2px dashed #B8B8BC;display:flex;align-items:center;justify-content:center;font-size:20px;color:#8A8A8E;flex:none;}
-.stats{display:flex;gap:30px;}
-.stats div{font-size:19px;color:#8A8A8E;} .stats b{display:block;width:70px;height:22px;background:#E6E6E8;border-radius:4px;margin-bottom:8px;}
-.ln{display:flex;gap:16px;align-items:flex-start;margin-top:22px;}
-.tagn{flex:none;font-family:var(--mono);font-size:20px;font-weight:700;color:#fff;background:var(--red);border-radius:6px;padding:2px 9px;margin-top:4px;}
-.pname{font-size:30px;font-weight:900;}
-.pbio{font-size:25px;line-height:1.55;color:#3A3A3E;}
-.plink{font-size:25px;font-weight:700;color:#3A3A3E;text-decoration:underline;text-underline-offset:6px;}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
-.tiles div{height:170px;background:#3A3A3E;border-radius:8px;display:flex;align-items:flex-end;padding:14px;font-size:20px;font-weight:700;color:#fff;}
-#c3 .stanza,#c4 .stanza,#c5 .stanza,#c6 .stanza{gap:26px;}
-.ex{margin-top:56px;max-width:860px;}
-.note{margin-top:40px;font-size:25px;color:var(--muted);line-height:1.6;}
-.pins{margin-top:56px;width:100%;max-width:860px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.pins div{height:250px;border:2px dashed #4A4A4E;border-radius:14px;display:flex;align-items:flex-end;padding:20px;font-size:27px;font-weight:700;text-align:left;}
-#c7 .badge{margin-bottom:56px;}
-#c7 .step h3{font-size:38px;}
+/* 블랙 캔버스 포뮬러(FYND 이야기 계열): 다크 배경 + 화이트 텍스트, 레드는 배지·숫자·CTA박스에만.
+   배경 리듬 = 은은한 격자 / 다크 버건디 / 흰 배경 한 장. 장식 없음. 슬라이드 1장 = 1080×1350 */
+:root{
+  --dark:#0A0A0B; --burgundy:#2A0B10; --white:#FFFFFF; --ink:#121214;
+  --g1:#CFCFD1; --g2:#818185; --red:#DD010F; --sans:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;font-family:var(--sans)}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;margin:0 auto 40px;color:var(--white);word-break:keep-all}
+.grid{background-color:var(--dark);background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:90px 90px;background-position:-1px -1px}
+.burgundy{background:var(--burgundy)}
+.white{background:var(--white);color:var(--ink)}
+.badge{display:inline-block;background:var(--red);color:var(--white);font-size:28px;font-weight:700;padding:12px 20px;letter-spacing:.02em}
+.foot{position:absolute;left:96px;bottom:68px;font-size:24px;font-weight:500;color:var(--g2)}
+.page{position:absolute;right:76px;bottom:68px;font-size:24px;font-weight:700;color:var(--g2);font-variant-numeric:tabular-nums}
+
+/* 1 표지 */
+#s1 .badge{position:absolute;left:96px;top:120px}
+#s1 h1{position:absolute;left:96px;right:76px;top:400px;font-size:92px;font-weight:900;line-height:1.24;letter-spacing:-.03em}
+#s1 .list{position:absolute;left:96px;top:872px;font-size:33px;font-weight:500;color:var(--g1)}
+#s1 .sub{position:absolute;left:96px;top:940px;font-size:33px;font-weight:700;color:var(--white)}
+
+/* 2 와이어프레임(흰 배경 한 장) */
+#s2 .tag{position:absolute;left:96px;top:112px;font-size:27px;font-weight:700;color:var(--red)}
+#s2 h2{position:absolute;left:96px;right:76px;top:160px;font-size:60px;font-weight:900;line-height:1.3;letter-spacing:-.03em}
+.phone{position:absolute;left:96px;top:410px;width:780px;height:840px;overflow:hidden;border:3px solid var(--g1);border-radius:36px;padding:44px 44px 0;background:#FAFAFA}
+.phone .top{display:flex;align-items:center;gap:40px}
+.avatar{width:150px;height:150px;border-radius:50%;border:3px dashed var(--g2);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--g2);flex:none}
+.stats{display:flex;gap:34px}
+.stat b{display:block;width:76px;height:26px;background:var(--g1);margin-bottom:10px}
+.stat span{font-size:22px;color:var(--g2)}
+.line{position:relative;margin-top:30px}
+.pname{font-size:33px;font-weight:700;color:var(--ink)}
+.pbio{font-size:27px;line-height:1.55;color:#3A3A40}
+.plink{font-size:27px;font-weight:700;color:#3A3A40;text-decoration:underline;text-underline-offset:6px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:40px -44px 0}
+.tile{position:relative;height:250px;background:#E3E3E5;display:flex;align-items:flex-end;padding:16px;font-size:22px;font-weight:700;color:#55555B}
+.tile.pin{background:#3A3A40;color:#FFFFFF}
+.tile.pin::before{content:"고정";position:absolute;left:14px;top:14px;font-size:19px;font-weight:700;color:#FFFFFF;background:var(--red);padding:3px 9px}
+.mk{position:absolute;right:-138px;top:50%;transform:translateY(-50%);display:flex;align-items:center}
+.mk i{display:block;width:82px;height:3px;background:var(--red)}
+.mk b{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:var(--red);color:var(--white);font-size:30px;font-weight:900;font-style:normal}
+.mk2{position:absolute;left:830px;display:flex;align-items:center}
+.mk2 i{display:block;width:82px;height:3px;background:var(--red)}
+.mk2 b{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:var(--red);color:var(--white);font-size:30px;font-weight:900;font-style:normal}
+
+/* 3–6 항목 */
+.item .num{position:absolute;left:90px;top:96px;font-size:170px;font-weight:900;line-height:1;color:var(--red);letter-spacing:-.04em}
+.item .label{position:absolute;left:96px;top:300px;font-size:62px;font-weight:900;letter-spacing:-.03em}
+.item .stanza{position:absolute;left:96px;right:76px;top:420px;font-size:41px;font-weight:700;line-height:1.52;letter-spacing:-.02em}
+.ex{position:absolute;left:96px;right:76px;top:700px}
+.exrow{background:rgba(255,255,255,.07);padding:28px 34px 30px;margin-bottom:20px;border-left:8px solid var(--g2)}
+.exrow.after{border-left-color:var(--red);background:rgba(255,255,255,.12)}
+.exrow small{display:block;font-size:24px;font-weight:700;color:var(--g1);margin-bottom:8px}
+.exrow.after small{color:#FF6B73}
+.exrow p{font-size:38px;font-weight:700}
+.tip{position:absolute;left:96px;right:76px;top:1120px;font-size:28px;line-height:1.55;color:var(--g1)}
+.opts .ex{top:640px}
+.opts .exrow{padding:22px 34px 24px;margin-bottom:16px}
+.opts .exrow p{font-size:34px}
+.pins{position:absolute;left:96px;right:76px;top:720px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pins div{height:300px;border:3px dashed rgba(255,255,255,.55);display:flex;align-items:flex-end;padding:20px;font-size:30px;font-weight:700}
+
+/* 7 점검표 */
+#s7 .badge{position:absolute;left:96px;top:120px}
+#s7 h2{position:absolute;left:96px;right:76px;top:210px;font-size:64px;font-weight:900;line-height:1.3;letter-spacing:-.03em}
+#s7 ul{position:absolute;left:96px;right:76px;top:470px;list-style:none}
+#s7 li{display:flex;gap:30px;align-items:flex-start;padding:34px 0;border-top:2px solid rgba(255,255,255,.14);font-size:38px;font-weight:700;line-height:1.42}
+#s7 li:last-child{border-bottom:2px solid rgba(255,255,255,.14)}
+#s7 li::before{content:"";flex:none;width:46px;height:46px;border:3px solid var(--white);margin-top:4px}
+
+/* 8 마지막 장 */
+#s8 h2{position:absolute;left:96px;right:76px;top:250px;font-size:96px;font-weight:900;line-height:1.22;letter-spacing:-.035em}
+#s8 .cta{position:absolute;left:96px;top:560px;background:var(--red);padding:34px 44px;font-size:46px;font-weight:900;letter-spacing:-.02em}
+#s8 .desc{position:absolute;left:96px;right:120px;top:730px;font-size:33px;line-height:1.6;color:var(--g1)}
+#s8 .closing{position:absolute;left:96px;right:76px;bottom:80px;display:flex;justify-content:space-between;align-items:flex-end}
+#s8 .closing p{font-size:27px;line-height:1.5;color:var(--g1)}
+#s8 .mark{font-weight:900;font-size:44px;letter-spacing:.08em}
+
+/* FYND 로고: 모든 장 왼쪽 위에 작게. 어두운 바탕은 흰 글자 로고, 흰 바탕은 원본 로고 */
+.logo{position:absolute;left:96px;top:40px;height:30px;width:auto;z-index:5;display:block}
 </style>
 </head>
 <body>
 
-<section class="card" id="c1">
-  <div class="eyebrow"><span class="dot"></span>FYND · 사장님 노트 01</div>
-  <div class="mid">
-    <div class="headline">손님은 가게 계정<br>맨 위 <span class="hl">네 군데</span>부터<br>봅니다</div>
-    <p class="sub" style="margin-top:44px">5분이면 고칠 수 있는 곳들이에요</p>
-  </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">01 / 08</span></div>
+<section class="slide grid" id="s1">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <span class="badge">사장님 노트 01</span>
+  <h1>손님은 가게 계정<br>맨 위 네 군데부터<br>봅니다.</h1>
+  <p class="list">이름 칸 · 소개글 첫 줄 · 링크 · 고정 게시물</p>
+  <p class="sub">5분이면 고칠 수 있는 곳들이에요.</p>
+  <p class="foot">FYND · 충남 사장님 네트워크</p>
 </section>
 
-<section class="card light" id="c2">
-  <div class="eyebrow"><span class="dot"></span>프로필 첫 화면</div>
-  <div class="mid">
-    <div class="headline s">손님이 처음 보는 자리는<br>여기 네 곳입니다</div>
-    <div class="phone">
-      <div class="top">
-        <div class="avatar">사진</div>
-        <div class="stats"><div><b></b>게시물</div><div><b></b>팔로워</div><div><b></b>팔로잉</div></div>
+<section class="slide white" id="s2">
+  <img class="logo" src="../assets/fynd-logo.png" alt="FYND">
+  <p class="tag">프로필 첫 화면</p>
+  <h2>손님이 처음 보는 자리는<br>여기 네 곳입니다.</h2>
+  <div class="phone">
+    <div class="top">
+      <div class="avatar">사진</div>
+      <div class="stats">
+        <div class="stat"><b></b><span>게시물</span></div>
+        <div class="stat"><b></b><span>팔로워</span></div>
+        <div class="stat"><b></b><span>팔로잉</span></div>
       </div>
-      <div class="ln"><span class="tagn">1</span><p class="pname">○○식당 | 홍성 국밥·포장</p></div>
-      <div class="ln"><span class="tagn">2</span><p class="pbio">홍성읍 국밥집 · 매일 7~15시 · 포장 가능<br>월요일 휴무</p></div>
-      <div class="ln"><span class="tagn">3</span><p class="plink">링크 · 네이버 예약</p></div>
-      <div class="ln"><span class="tagn">4</span><p class="pbio">고정 게시물</p></div>
-      <div class="tiles"><div>메뉴·가격</div><div>찾아오는 길</div><div>후기</div></div>
+    </div>
+    <div class="line"><p class="pname">○○식당 | 홍성 국밥·포장</p></div>
+    <div class="line" style="margin-top:14px"><p class="pbio">홍성읍 국밥집 · 매일 7~15시 · 포장 가능<br>월요일 휴무</p></div>
+    <div class="line" style="margin-top:14px"><p class="plink">링크 · 네이버 예약</p></div>
+    <div class="tiles" style="position:relative">
+      <div class="tile pin">메뉴·가격</div><div class="tile pin">찾아오는 길</div><div class="tile pin">후기</div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div>
     </div>
   </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">02 / 08</span></div>
+  <span class="mk2" style="top:635px"><i></i><b>1</b></span>
+  <span class="mk2" style="top:714px"><i></i><b>2</b></span>
+  <span class="mk2" style="top:790px"><i></i><b>3</b></span>
+  <span class="mk2" style="top:974px"><i></i><b>4</b></span>
+  <p class="page">2 / 8</p>
 </section>
 
-<section class="card grid-bg" id="c3">
-  <div class="eyebrow"><span class="dot"></span>01 · 이름 칸</div>
-  <div class="mid">
-    <div class="stanza">
-      <p>이름 칸은 검색에 걸려요</p>
-      <p>상호만 쓰지 말고<br><span class="hl">지역과 업종</span>을 같이 써 주세요</p>
-    </div>
-    <div class="boxes ex">
-      <div><small>지금</small><span>○○식당</span></div>
-      <div class="on"><small>이렇게</small><span>○○식당 | 홍성 국밥·포장</span></div>
-    </div>
-    <p class="note">이름은 14일 동안 두 번까지 바꿀 수 있어요</p>
+<section class="slide grid item" id="s3">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <p class="num">1</p>
+  <p class="label">이름 칸</p>
+  <p class="stanza">이름 칸은 검색에 걸려요.<br>상호만 쓰지 말고<br>지역과 업종을 같이 써 주세요.</p>
+  <div class="ex">
+    <div class="exrow"><small>지금</small><p>○○식당</p></div>
+    <div class="exrow after"><small>이렇게</small><p>○○식당 | 홍성 국밥·포장</p></div>
   </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">03 / 08</span></div>
+  <p class="tip">이름은 14일 동안 두 번까지 바꿀 수 있어요.<br>한 번에 정해서 바꾸세요.</p>
+  <p class="page">3 / 8</p>
 </section>
 
-<section class="card" id="c4">
-  <div class="eyebrow"><span class="dot"></span>02 · 소개글 첫 줄</div>
-  <div class="mid">
-    <div class="stanza">
-      <p>소개글 첫 줄에는</p>
-      <p><span class="hl">무엇을, 어디서, 언제</span><br>하는지 적어 주세요</p>
-    </div>
-    <div class="boxes ex">
-      <div><small>지금</small><span>정성을 다해 만듭니다 :)</span></div>
-      <div class="on"><small>이렇게</small><span>홍성읍 국밥집 · 매일 7~15시 · 포장 가능</span></div>
-    </div>
-    <p class="note">휴무일은 바로 다음 줄에 적어 주세요</p>
+<section class="slide burgundy item" id="s4">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <p class="num">2</p>
+  <p class="label">소개글 첫 줄</p>
+  <p class="stanza">첫 줄에<br>무엇을, 어디서, 언제 하는지<br>적어 주세요.</p>
+  <div class="ex">
+    <div class="exrow"><small>지금</small><p>정성을 다해 만듭니다 :)</p></div>
+    <div class="exrow after"><small>이렇게</small><p>홍성읍 국밥집 · 매일 7~15시 · 포장 가능</p></div>
   </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">04 / 08</span></div>
+  <p class="tip">휴무일은 바로 다음 줄에 적어 주세요.</p>
+  <p class="page">4 / 8</p>
 </section>
 
-<section class="card burgundy" id="c5">
-  <div class="eyebrow"><span class="dot"></span>03 · 링크</div>
-  <div class="mid">
-    <div class="stanza">
-      <p>링크 맨 앞에는</p>
-      <p>손님이 <span class="hl">가장 자주 하는 일</span><br>하나만 두세요</p>
-    </div>
-    <div class="boxes ex">
-      <div><small>예약 손님이 많다면</small><span>네이버 예약</span></div>
-      <div><small>택배 주문이 많다면</small><span>스마트스토어</span></div>
-      <div><small>찾아오는 손님이 많다면</small><span>네이버 지도</span></div>
-    </div>
-    <p class="note">링크가 여러 개면 맨 앞 하나만 보이고,<br>나머지는 한 번 더 눌러야 나와요</p>
+<section class="slide grid item opts" id="s5">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <p class="num">3</p>
+  <p class="label">링크</p>
+  <p class="stanza">링크 맨 앞에는<br>손님이 가장 자주 하는 일<br>하나만 두세요.</p>
+  <div class="ex">
+    <div class="exrow after"><small>예약 손님이 많다면</small><p>네이버 예약</p></div>
+    <div class="exrow after"><small>택배 주문이 많다면</small><p>스마트스토어</p></div>
+    <div class="exrow after"><small>찾아오는 손님이 많다면</small><p>네이버 지도</p></div>
   </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">05 / 08</span></div>
+  <p class="tip" style="top:1110px">링크가 여러 개면 맨 앞 하나만 보이고,<br>나머지는 한 번 더 눌러야 나와요.</p>
+  <p class="page">5 / 8</p>
 </section>
 
-<section class="card grid-bg" id="c6">
-  <div class="eyebrow"><span class="dot"></span>04 · 고정 게시물</div>
-  <div class="mid">
-    <div class="stanza">
-      <p>처음 온 손님이 물어볼 것</p>
-      <p><span class="hl">세 가지</span>를 맨 위에 고정해 두세요</p>
-    </div>
-    <div class="pins"><div>메뉴·가격</div><div>찾아오는 길</div><div>후기·분위기</div></div>
-    <p class="note">게시물 오른쪽 위 ⋯ 를 누르면 '프로필에 고정'이 있어요<br>세 개까지 고정돼요</p>
-  </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">06 / 08</span></div>
+<section class="slide burgundy item" id="s6">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <p class="num">4</p>
+  <p class="label">고정 게시물</p>
+  <p class="stanza">처음 온 손님이 물어볼 것<br>세 가지를 맨 위에<br>고정해 두세요.</p>
+  <div class="pins"><div>메뉴·가격</div><div>찾아오는 길</div><div>후기·분위기</div></div>
+  <p class="tip" style="top:1090px">게시물 오른쪽 위 ⋯ 를 누르면<br>‘프로필에 고정’이 있어요. 세 개까지 고정돼요.</p>
+  <p class="page">6 / 8</p>
 </section>
 
-<section class="card" id="c7">
-  <div class="eyebrow"><span class="dot"></span>점검표</div>
-  <div class="mid">
-    <div class="badge">저장해 두고 하나씩 체크</div>
-    <div class="steps">
-      <div class="step"><div class="n">01</div><div><h3>이름 칸에 지역과 업종이 있다</h3><p>상호만 있으면 검색에 잘 안 걸려요</p></div></div>
-      <div class="step"><div class="n">02</div><div><h3>소개글 첫 줄에 무엇·어디·언제가 있다</h3><p>휴무일은 다음 줄에</p></div></div>
-      <div class="step"><div class="n">03</div><div><h3>링크 맨 앞이 예약·주문·길찾기 중 하나다</h3><p>손님이 가장 자주 하는 일 하나</p></div></div>
-      <div class="step"><div class="n">04</div><div><h3>고정 게시물이 메뉴·길·후기다</h3><p>세 개까지 고정할 수 있어요</p></div></div>
-    </div>
-  </div>
-  <div class="footer-bar"><span class="fynd">FYND</span><span class="page">07 / 08</span></div>
+<section class="slide grid" id="s7">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <span class="badge">점검표</span>
+  <h2>저장해 두고<br>하나씩 체크해 보세요.</h2>
+  <ul>
+    <li>이름 칸에 지역과 업종이 들어가 있다</li>
+    <li>소개글 첫 줄에 무엇·어디·언제가 있다</li>
+    <li>링크 맨 앞이 예약·주문·길찾기 중 하나다</li>
+    <li>고정 게시물 세 개가 메뉴·길·후기다</li>
+  </ul>
+  <p class="page">7 / 8</p>
 </section>
 
-<section class="card closing" id="c8">
-  <div>
-    <div class="close-head">직접 보고<br>알려 드릴게요.</div>
-    <div class="close-sub">충남 사장님이라면 누구나, 무료예요.<br>FYND는 충남 사장님들이 서로 돕는<br>네트워크를 만듭니다</div>
-  </div>
-  <div class="cta-box">댓글에 '점검'을 남겨 주세요<br>고칠 곳 세 가지를 DM으로 보내 드려요</div>
-  <div class="mark">FYND</div>
+<section class="slide grid" id="s8">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <h2>직접 보고<br>알려 드릴게요.</h2>
+  <p class="cta">댓글에 ‘점검’을 남겨 주세요</p>
+  <p class="desc">FYND가 사장님 계정을 직접 보고, 고칠 곳 세 가지를 DM으로 보내 드려요. 충남 사장님이라면 누구나 무료예요.</p>
+  <div class="closing"><p>FYND는 충남 사장님들이<br>서로 돕는 네트워크를 만듭니다.</p><span class="mark">FYND</span></div>
 </section>
 
 </body>
