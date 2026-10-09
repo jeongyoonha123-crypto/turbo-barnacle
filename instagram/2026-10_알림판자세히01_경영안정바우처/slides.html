@@ -95,11 +95,16 @@ body{background:#888;font-family:var(--sans)}
 .steps p{font-size:31px;font-weight:700;line-height:1.4}
 .steps small{display:block;font-size:24px;font-weight:500;color:var(--body);margin-top:4px;line-height:1.45}
 .shot{position:absolute;left:96px;right:76px;border:3px dashed var(--g1);display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:700;color:var(--g2);text-align:center;line-height:1.5}
+
+/* 표지 배경: 바우처 누리집 첫 화면(사용자 캡처)을 흐리게 깔고 어둡게 덮는다 */
+.photo{background:linear-gradient(rgba(10,10,11,.78),rgba(10,10,11,.84)),url(bg-voucher-home.jpg) center/cover;color:var(--white)}
+.shotimg{position:absolute;left:96px;right:76px;border:2px solid var(--line);display:block;width:908px;height:auto}
+.shotcap{position:absolute;left:96px;font-size:24px;font-weight:500;color:var(--body)}
 </style>
 </head>
 <body>
 
-<section class="slide grid" id="s1">
+<section class="slide photo" id="s1">
   <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
   <span class="badge">알림판 자세히 01</span>
   <p class="date">사장님 알림판 01의 2번 소식 · 10월 9일 기준</p>
@@ -155,7 +160,8 @@ body{background:#888;font-family:var(--sans)}
     <li><b>03</b><p>본인 인증<small>휴대폰, 간편인증, 공동인증서 중 하나</small></p></li>
     <li><b>04</b><p>업체 정보 확인, 카드사 고르기<small>신청이 끝나면 알림톡이 바로 와요</small></p></li>
   </ol>
-  <div class="shot" style="top:960px;height:250px">신청 화면 캡처 자리<br>(Canva에서 넣기)</div>
+  <img class="shotimg" style="top:960px" src="shot-voucher-home.png" alt="소상공인 경영안정 바우처 누리집 첫 화면">
+  <p class="shotcap" style="top:1180px">누리집 첫 화면 오른쪽 위 '바우처 신청'을 누르면 시작돼요</p>
   <p class="src">출처: 소상공인 경영안정 바우처 공식 누리집, 토스뱅크 안내</p>
   <p class="page">4 / 9</p>
 </section>
