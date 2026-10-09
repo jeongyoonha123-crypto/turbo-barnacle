@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>FYND 알림판 자세히 01 · 경영안정 바우처</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* 알림판 자세히(사장님 알림판과 같은 틀): 표지·점검표·마지막 장은 블랙 캔버스(사장님 노트와 같은 계열),
+   소식 장은 흰 바탕 공지문 형식(상단 잉크 띠 + 항목표 + 할 일 + 출처). 레드는 태그·숫자·CTA에만. 1장 = 1080×1350 */
+:root{
+  --dark:#0A0A0B; --white:#FFFFFF; --ink:#121214; --body:#2B2B30; --line:#E3E3E5; --soft:#F4F4F5;
+  --g1:#CFCFD1; --g2:#818185; --red:#DD010F; --sans:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;font-family:var(--sans)}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;margin:0 auto 40px;word-break:keep-all}
+.grid{background-color:var(--dark);color:var(--white);background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:90px 90px;background-position:-1px -1px}
+.badge{display:inline-block;background:var(--red);color:var(--white);font-size:28px;font-weight:700;padding:12px 20px;letter-spacing:.02em}
+.foot{position:absolute;left:96px;bottom:68px;font-size:24px;font-weight:500;color:var(--g2)}
+.page{position:absolute;right:76px;bottom:64px;font-size:23px;font-weight:700;color:var(--g2);font-variant-numeric:tabular-nums}
+
+/* 1 표지 */
+#s1 .badge{position:absolute;left:96px;top:110px}
+#s1 .date{position:absolute;left:96px;top:186px;font-size:27px;font-weight:500;color:var(--g1)}
+#s1 h1{position:absolute;left:96px;right:76px;top:262px;font-size:84px;font-weight:900;line-height:1.24;letter-spacing:-.03em}
+#s1 ol{position:absolute;left:96px;right:76px;top:654px;list-style:none}
+#s1 li{display:grid;grid-template-columns:44px 150px 1fr;align-items:baseline;padding:19px 0;border-top:2px solid rgba(255,255,255,.13)}
+#s1 li:last-child{border-bottom:2px solid rgba(255,255,255,.13)}
+#s1 li b{font-size:30px;font-weight:900;color:var(--red);font-variant-numeric:tabular-nums}
+#s1 li span{font-size:25px;font-weight:700;color:var(--g1)}
+#s1 li em{font-style:normal;font-size:31px;font-weight:700;color:var(--white)}
+
+/* 소식 장 (흰 바탕 공지문) */
+.notice{background:var(--white);color:var(--ink)}
+.strip{position:absolute;left:0;right:0;top:0;height:84px;background:var(--ink);color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:0 76px 0 96px;font-size:23px;font-weight:700;letter-spacing:.02em}
+.strip span{color:var(--g1);font-weight:500}
+.tag{position:absolute;left:96px;top:142px;font-size:27px;font-weight:700;color:var(--red)}
+.notice h2{position:absolute;left:96px;right:76px;top:192px;font-size:58px;font-weight:900;line-height:1.3;letter-spacing:-.03em}
+.facts{position:absolute;left:96px;right:76px;top:440px}
+.row{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:24px 0;border-top:2px solid var(--line)}
+.row:last-child{border-bottom:2px solid var(--line)}
+.row dt{font-size:25px;font-weight:700;color:var(--g2);padding-top:3px}
+.row dd{font-size:31px;font-weight:700;line-height:1.45;color:var(--ink)}
+.row dd small{display:block;font-size:25px;font-weight:500;color:var(--body);margin-top:4px;line-height:1.5}
+.todo{position:absolute;left:96px;right:76px;background:var(--soft);border-left:8px solid var(--red);padding:24px 30px 26px}
+.todo b{display:block;font-size:24px;font-weight:700;color:var(--red);margin-bottom:6px}
+.todo p{font-size:29px;font-weight:700;line-height:1.5;color:var(--ink)}
+.src{position:absolute;left:96px;right:200px;bottom:62px;font-size:21px;line-height:1.5;color:var(--g2)}
+
+/* 날짜표 (세금 일정·장사 달력) */
+.dates{position:absolute;left:96px;right:76px;top:430px}
+.d{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:22px 0;border-top:2px solid var(--line)}
+.d:last-child{border-bottom:2px solid var(--line)}
+.d .day{font-size:40px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15}
+.d .day i{font-style:normal;font-size:24px;font-weight:700;color:var(--g2);margin-left:6px}
+.d .what{font-size:31px;font-weight:700;line-height:1.35}
+.d .what small{display:block;font-size:24px;font-weight:500;color:var(--body);margin-top:4px;line-height:1.45}
+.d.hot .day{color:var(--red)}
+
+/* 최저임금 큰 숫자 */
+.big{position:absolute;left:96px;right:76px;top:420px;display:flex;align-items:baseline;gap:26px;flex-wrap:wrap}
+.big .old{font-size:44px;font-weight:700;color:var(--g2);text-decoration:line-through;text-decoration-thickness:3px}
+.big .arrow{font-size:40px;font-weight:700;color:var(--g2)}
+.big .new{font-size:112px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.big .new small{font-size:44px;font-weight:900;margin-left:4px}
+.big .up{width:100%;font-size:30px;font-weight:700;color:var(--red);margin-top:6px}
+
+/* 8 점검표 */
+#s8 .badge{position:absolute;left:96px;top:116px}
+#s8 h2{position:absolute;left:96px;right:76px;top:204px;font-size:64px;font-weight:900;line-height:1.3;letter-spacing:-.03em}
+#s8 ul{position:absolute;left:96px;right:76px;top:440px;list-style:none}
+#s8 li{display:flex;gap:28px;align-items:flex-start;padding:28px 0;border-top:2px solid rgba(255,255,255,.14);font-size:35px;font-weight:700;line-height:1.4}
+#s8 li:last-child{border-bottom:2px solid rgba(255,255,255,.14)}
+#s8 li::before{content:"";flex:none;width:44px;height:44px;border:3px solid var(--white);margin-top:3px}
+#s8 li small{display:block;font-size:24px;font-weight:500;color:var(--g1);margin-top:2px}
+
+/* 9 마지막 장 */
+#s9 h2{position:absolute;left:96px;right:76px;top:230px;font-size:88px;font-weight:900;line-height:1.22;letter-spacing:-.035em}
+#s9 .cta{position:absolute;left:96px;top:600px;background:var(--red);padding:32px 44px;font-size:46px;font-weight:900;letter-spacing:-.02em}
+#s9 .desc{position:absolute;left:96px;right:120px;top:770px;font-size:33px;line-height:1.6;color:var(--g1)}
+#s9 .note{position:absolute;left:96px;right:120px;top:960px;font-size:25px;line-height:1.6;color:var(--g2)}
+#s9 .closing{position:absolute;left:96px;right:76px;bottom:80px;display:flex;justify-content:space-between;align-items:flex-end}
+#s9 .closing p{font-size:27px;line-height:1.5;color:var(--g1)}
+#s9 .mark{font-weight:900;font-size:44px;letter-spacing:.08em}
+
+/* FYND 로고: 첫 장과 마지막 장 왼쪽 위에만 작게. 어두운 바탕은 흰 글자 로고, 흰 바탕은 원본 로고 */
+.logo{position:absolute;left:96px;top:40px;height:30px;width:auto;z-index:5;display:block}
+
+/* 알림판 자세히 01 전용 */
+#s1 h1{font-size:80px}
+.steps{position:absolute;left:96px;right:76px;top:430px;list-style:none}
+.steps li{display:grid;grid-template-columns:90px 1fr;gap:10px;padding:22px 0;border-top:2px solid var(--line)}
+.steps li:last-child{border-bottom:2px solid var(--line)}
+.steps b{font-size:38px;font-weight:900;color:var(--red);font-variant-numeric:tabular-nums;line-height:1.2}
+.steps p{font-size:31px;font-weight:700;line-height:1.4}
+.steps small{display:block;font-size:24px;font-weight:500;color:var(--body);margin-top:4px;line-height:1.45}
+.shot{position:absolute;left:96px;right:76px;border:3px dashed var(--g1);display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:700;color:var(--g2);text-align:center;line-height:1.5}
+</style>
+</head>
+<body>
+
+<section class="slide grid" id="s1">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <span class="badge">알림판 자세히 01</span>
+  <p class="date">사장님 알림판 01의 2번 소식 · 10월 9일 기준</p>
+  <h1>경영안정 바우처<br>25만 원, 이렇게<br>신청하세요.</h1>
+  <ol>
+    <li><b>1</b><span>대상</span><em>내가 받을 수 있는지</em></li>
+    <li><b>2</b><span>준비</span><em>서류 대신 카드 한 장</em></li>
+    <li><b>3</b><span>신청</span><em>네 단계로 끝</em></li>
+    <li><b>4</b><span>선정 후</span><em>카드사 문자 확인</em></li>
+    <li><b>5</b><span>쓰는 곳</span><em>공과금·4대보험료·주유비</em></li>
+    <li><b>6</b><span>주의</span><em>마감과 놓치기 쉬운 것</em></li>
+  </ol>
+  <p class="foot">FYND · 충남 사장님 네트워크</p>
+</section>
+
+<section class="slide notice" id="s2">
+  <div class="strip">알림판 자세히 01<span>경영안정 바우처</span></div>
+  <p class="tag">1 대상</p>
+  <h2>작년 매출이 1억 400만 원<br>미만이면 대상입니다.</h2>
+  <dl class="facts">
+    <div class="row"><dt>매출</dt><dd>2025년 연매출 0원 초과 1억 400만&nbsp;원 미만<small>국세청에 신고한 매출 기준이에요</small></dd></div>
+    <div class="row"><dt>개업</dt><dd>2025년 12월 31일 이전에 문을 열었어야 해요</dd></div>
+    <div class="row"><dt>영업</dt><dd>신청하는 날 휴업·폐업 상태가 아니어야 해요</dd></div>
+    <div class="row"><dt>한 사람</dt><dd>가게가 여러 곳이어도 한 곳만 신청해요<small>공동대표라면 주 대표 한 명만</small></dd></div>
+  </dl>
+  <div class="todo" style="top:1040px"><b>작년에 문을 열었다면</b><p>월평균 매출 × 12로 계산해요. 10월 20일 개업, 매출 2,500만&nbsp;원이면 1억&nbsp;원이라 대상이에요.</p></div>
+  <p class="src">출처: 소상공인 경영안정 바우처 공식 누리집, 토스뱅크 안내(누리집 자료 인용)</p>
+  <p class="page">2 / 9</p>
+</section>
+
+<section class="slide notice" id="s3">
+  <div class="strip">알림판 자세히 01<span>경영안정 바우처</span></div>
+  <p class="tag">2 준비</p>
+  <h2>서류는 필요 없고,<br>카드 한 장만 정하면 됩니다.</h2>
+  <dl class="facts">
+    <div class="row"><dt>준비</dt><dd>사업자등록번호, 본인 인증할 휴대폰</dd></div>
+    <div class="row"><dt>되는 카드</dt><dd>대표자 본인 명의 개인 신용·체크카드</dd></div>
+    <div class="row"><dt>안 되는 카드</dt><dd>법인카드, 가족카드, 유가보조카드<small>그 밖의 특수 카드는 카드사에 먼저 물어보세요</small></dd></div>
+    <div class="row"><dt>주의</dt><dd>바우처가 들어온 뒤에는 카드를 바꿀 수 없어요</dd></div>
+  </dl>
+  <div class="todo" style="top:1040px"><b>할 일</b><p>주유하고 공과금 낼 때 가장 많이 쓰는 카드로 고르세요.</p></div>
+  <p class="src">출처: 토스뱅크 안내(누리집 자료 인용), KB국민카드 경영안정 바우처 안내</p>
+  <p class="page">3 / 9</p>
+</section>
+
+<section class="slide notice" id="s4">
+  <div class="strip">알림판 자세히 01<span>경영안정 바우처</span></div>
+  <p class="tag">3 신청</p>
+  <h2>신청은 네 단계로<br>끝납니다.</h2>
+  <ol class="steps">
+    <li><b>01</b><p>소상공인경영안정바우처.kr 접속<small>소상공인24에서도 신청할 수 있어요</small></p></li>
+    <li><b>02</b><p>정보 제공 동의, 사업자등록번호 입력</p></li>
+    <li><b>03</b><p>본인 인증<small>휴대폰, 간편인증, 공동인증서 중 하나</small></p></li>
+    <li><b>04</b><p>업체 정보 확인, 카드사 고르기<small>신청이 끝나면 알림톡이 바로 와요</small></p></li>
+  </ol>
+  <div class="shot" style="top:960px;height:250px">신청 화면 캡처 자리<br>(Canva에서 넣기)</div>
+  <p class="src">출처: 소상공인 경영안정 바우처 공식 누리집, 토스뱅크 안내</p>
+  <p class="page">4 / 9</p>
+</section>
+
+<section class="slide notice" id="s5">
+  <div class="strip">알림판 자세히 01<span>경영안정 바우처</span></div>
+  <p class="tag">4 선정 후</p>
+  <h2>선정되면 카드사에서<br>문자가 옵니다.</h2>
+  <dl class="facts">
+    <div class="row"><dt>등록</dt><dd>고른 카드에 바우처가 자동으로 등록돼요<small>카드사 등록 안내 문자를 꼭 확인하세요</small></dd></div>
+    <div class="row"><dt>쓰는 법</dt><dd>등록한 카드로 결제하면 바우처에서 먼저 빠져요<small>영수증이나 증빙을 낼 필요가 없어요</small></dd></div>
+    <div class="row"><dt>확인</dt><dd>누리집 '신청결과 및 잔액조회'<small>선정 결과, 쓴 내역, 남은 금액을 볼 수 있어요</small></dd></div>
+  </dl>
+  <div class="todo" style="top:1000px"><b>할 일</b><p>문자가 안 오면 누리집에서 신청 결과부터 확인하세요.</p></div>
+  <p class="src">출처: 소상공인 경영안정 바우처 공식 누리집, 토스뱅크 안내</p>
+  <p class="page">5 / 9</p>
+</section>
+
+<section class="slide notice" id="s6">
+  <div class="strip">알림판 자세히 01<span>경영안정 바우처</span></div>
+  <p class="tag">5 쓰는 곳</p>
+  <h2>공과금, 4대보험료,<br>주유비에 씁니다.</h2>
+  <dl class="facts">
+    <div class="row"><dt>공과금</dt><dd>전기요금, 가스요금, 수도요금</dd></div>
+    <div class="row"><dt>4대보험료</dt><dd>국민연금, 건강보험, 고용보험, 산재보험</dd></div>
+    <div class="row"><dt>차량 연료비</dt><dd>주유비 같은 차량 연료비</dd></div>
+    <div class="row"><dt>화재공제</dt><dd>전통시장 화재공제료<small>신청할 때 고르면 공제료만큼 빼고 바우처가 들어와요</small></dd></div>
+  </dl>
+  <div class="todo" style="top:1040px"><b>알아 두세요</b><p>25만&nbsp;원을 넘는 금액, 정해진 곳이 아닌 결제는 사장님이 내요.</p></div>
+  <p class="src">출처: KB국민카드 경영안정 바우처 안내, 토스뱅크 안내</p>
+  <p class="page">6 / 9</p>
+</section>
+
+<section class="slide notice" id="s7">
+  <div class="strip">알림판 자세히 01<span>경영안정 바우처</span></div>
+  <p class="tag">6 주의</p>
+  <h2>12월 18일 전에<br>예산이 끝날 수 있습니다.</h2>
+  <div class="dates">
+    <div class="d hot"><p class="day">12/18<i>금</i></p><p class="what">신청 마감 (오후 6시)<small>예산이 떨어지면 이보다 일찍 마감돼요</small></p></div>
+    <div class="d hot"><p class="day">12/31<i>목</i></p><p class="what">사용 마감<small>남은 금액은 국고로 돌아가요</small></p></div>
+    <div class="d"><p class="day">매일<i>밤</i></p><p class="what">23시 58분 ~ 0시 3분 결제는 빠지지 않아요<small>시스템 점검 시간이라 일반 카드 결제로 처리돼요</small></p></div>
+  </div>
+  <div class="todo" style="top:1000px"><b>막히면</b><p>바우처 전용 콜센터 1533-0600 (평일 9~18시). 누리집 챗봇은 24시간 열려 있어요.</p></div>
+  <p class="src">출처: 토스뱅크 안내, KB국민카드 경영안정 바우처 안내</p>
+  <p class="page">7 / 9</p>
+</section>
+
+<section class="slide grid" id="s8">
+  <span class="badge">신청 전 체크</span>
+  <h2>다섯 개가 다 맞으면<br>지금 신청하세요.</h2>
+  <ul>
+    <li><span>2025년 매출 1억 400만 원 미만<small>국세청 신고 기준</small></span></li>
+    <li><span>2025년 12월 31일 이전 개업</span></li>
+    <li><span>지금 영업 중 (휴업·폐업 아님)</span></li>
+    <li><span>내 이름으로 된 개인 카드가 있다<small>법인·가족카드는 안 돼요</small></span></li>
+    <li><span>사업자등록번호와 휴대폰 준비</span></li>
+  </ul>
+  <p class="page">8 / 9</p>
+</section>
+
+<section class="slide grid" id="s9">
+  <img class="logo" src="../assets/fynd-logo-white.png" alt="FYND">
+  <h2>신청하다 막히면<br>물어보세요.</h2>
+  <p class="cta">댓글에 '바우처'를 남겨 주세요</p>
+  <p class="desc">신청 순서와 확인할 것을 정리해 DM으로 보내 드려요. 충남 사장님이라면 누구나요.</p>
+  <p class="note">10월 9일 기준으로 정리했어요.<br>신청하기 전에 누리집 공고를 꼭 확인해 주세요.</p>
+  <div class="closing"><p>FYND는 충남 사장님들이<br>서로 돕는 네트워크를 만듭니다.</p><span class="mark">FYND</span></div>
+</section>
+
+</body>
+</html>
