@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>FYND 알림판 자세히 01 · 경영안정 바우처 릴스</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* 릴스판(9:16, 1080×1920). 캐러셀과 같은 블랙 캔버스 + 레드 포인트.
+   인스타 화면에서 가려지는 곳을 피해 글자는 가로 96~940px, 세로 300~1440px 안에 둔다.
+   피드 격자(3:4)에서는 세로 240~1680px만 보이므로 첫 컷 글자는 그 안에 둔다. */
+:root{--dark:#0A0A0B;--white:#FFFFFF;--ink:#121214;--g1:#CFCFD1;--g2:#818185;--red:#DD010F;--sans:'Noto Sans KR',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;font-family:var(--sans)}
+.slide{width:1080px;height:1920px;position:relative;overflow:hidden;margin:0 auto 40px;color:var(--white);word-break:keep-all;
+  background-color:var(--dark);background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:90px 90px;background-position:-1px -1px}
+.photo{background:linear-gradient(rgba(10,10,11,.68),rgba(10,10,11,.76)),url(../bg-voucher-home.jpg) center/cover}
+.box{position:absolute;left:96px;right:140px;top:360px;bottom:480px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.box > *{flex:none}
+.tag{display:inline-block;font-size:40px;font-weight:700;color:var(--red);margin-bottom:28px}
+.badge{display:inline-block;background:var(--red);color:var(--white);font-size:40px;font-weight:700;padding:16px 28px;margin-bottom:44px}
+h1{font-size:112px;font-weight:900;line-height:1.22;letter-spacing:-.035em}
+h2{font-size:96px;font-weight:900;line-height:1.24;letter-spacing:-.035em}
+.hl{color:var(--red)}
+.sub{font-size:44px;font-weight:700;line-height:1.5;color:var(--g1);margin-top:48px}
+.small{font-size:36px;font-weight:500;line-height:1.55;color:var(--g2);margin-top:28px}
+.steps{list-style:none;margin-top:60px;width:844px}
+.steps li{display:flex;gap:34px;align-items:baseline;padding:28px 0;border-top:2px solid rgba(255,255,255,.16);font-size:50px;font-weight:700}
+.steps li:last-child{border-bottom:2px solid rgba(255,255,255,.16)}
+.steps b{font-size:46px;font-weight:900;color:var(--red);font-variant-numeric:tabular-nums}
+.shot{display:block;width:844px;margin-top:56px;border:2px solid rgba(255,255,255,.2)}
+.big{font-size:230px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--red)}
+.row{width:844px;display:flex;gap:36px;align-items:baseline;margin-top:64px;padding-top:44px;border-top:2px solid rgba(255,255,255,.16)}
+.row b{font-size:84px;font-weight:900;letter-spacing:-.03em}
+.row span{font-size:44px;font-weight:700;color:var(--g1)}
+.cta{display:inline-block;background:var(--red);padding:30px 42px;font-size:54px;font-weight:900;letter-spacing:-.02em;margin-top:64px}
+.logo{position:absolute;left:96px;top:300px;height:40px;width:auto}
+.foot{position:absolute;left:96px;top:1400px;font-size:34px;line-height:1.5;color:var(--g1)}
+</style>
+</head>
+<body>
+
+<!-- 1 훅 (2.2초) -->
+<section class="slide photo" id="c1">
+  <img class="logo" src="../../assets/fynd-logo-white.png" alt="FYND">
+  <div class="box">
+    <span class="badge">알림판 자세히 01</span>
+    <h1>경영안정 바우처<br><span class="hl">25만 원</span>,<br>받으셨나요?</h1>
+    <p class="sub">12월 18일 전에 신청하세요</p>
+  </div>
+</section>
+
+<!-- 2 대상 -->
+<section class="slide" id="c2">
+  <div class="box">
+    <span class="tag">1 대상</span>
+    <h2>작년 매출이<br><span class="hl">1억 400만 원</span><br>미만이면<br>받을 수 있어요.</h2>
+    <p class="sub">2025년 안에 문을 열었고<br>지금 영업 중이면 돼요</p>
+  </div>
+</section>
+
+<!-- 3 준비 -->
+<section class="slide" id="c3">
+  <div class="box">
+    <span class="tag">2 준비</span>
+    <h2>서류는<br>필요 없어요.</h2>
+    <p class="sub">내 이름으로 된 개인 카드<br>한 장만 정하면 돼요</p>
+    <p class="small">법인카드·가족카드는 안 돼요</p>
+  </div>
+</section>
+
+<!-- 4 신청 -->
+<section class="slide" id="c4">
+  <div class="box">
+    <span class="tag">3 신청</span>
+    <h2>신청은<br>네 단계예요.</h2>
+    <ol class="steps">
+      <li><b>01</b>소상공인경영안정바우처.kr</li>
+      <li><b>02</b>동의, 사업자등록번호</li>
+      <li><b>03</b>휴대폰 본인 인증</li>
+      <li><b>04</b>카드사 고르면 끝</li>
+    </ol>
+    <img class="shot" src="../shot-voucher-home.png" alt="바우처 누리집 첫 화면">
+  </div>
+</section>
+
+<!-- 5 쓰는 곳 -->
+<section class="slide" id="c5">
+  <div class="box">
+    <span class="tag">4 쓰는 곳</span>
+    <h2>전기·가스·수도요금,<br>4대보험료,<br><span class="hl">주유비</span>에 써요.</h2>
+    <p class="sub">등록한 카드로 결제하면<br>25만 원까지 자동으로 빠져요</p>
+  </div>
+</section>
+
+<!-- 6 마감 -->
+<section class="slide" id="c6">
+  <div class="box">
+    <span class="tag">5 마감</span>
+    <p class="big">12/18</p>
+    <h2 style="font-size:84px;margin-top:30px">신청 마감, 오후 6시.</h2>
+    <p class="sub" style="margin-top:28px">예산이 떨어지면 더 일찍 끝나요</p>
+    <div class="row"><b>12/31</b><span>사용 마감</span></div>
+  </div>
+</section>
+
+<!-- 7 마무리 -->
+<section class="slide" id="c7">
+  <img class="logo" src="../../assets/fynd-logo-white.png" alt="FYND">
+  <div class="box">
+    <h2>자세한 순서는<br>게시물에<br>정리해 뒀어요.</h2>
+    <p class="cta">막히면 댓글에 '바우처'</p>
+    <p class="sub">신청 순서를 DM으로 보내 드려요</p>
+  </div>
+  <p class="foot">FYND는 충남 사장님들이<br>서로 돕는 네트워크를 만듭니다.</p>
+</section>
+
+</body>
+</html>
